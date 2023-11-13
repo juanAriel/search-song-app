@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView,StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import SearchInput from '../atoms/searchInput'
 import CardSongSearch from '../atoms/cardSongSearch'
@@ -17,16 +17,13 @@ const Home = () => {
   useEffect(() => {
     if (data) {
       const dataSong = getListSong(data);
-      console.log("data", data);
       setSongsData(dataSong);
     }
   }, [searchTerm, data]);
 
   const goUrlSongSpotify = (id: string) => {
-    console.log(id);
+    navigation.navigate('Details' , {id});
   };
-
-  
 
   const handleSearch = (nameSong: string) => {
     if (nameSong && nameSong.length > 3) {
@@ -40,11 +37,20 @@ const Home = () => {
 
   
   return (
-    <View>
+    <View style={styles.container}>
       <SearchInput onSearch={handleSearch}/>
-      <CardSongSearch tracksData={songsData} onClickSong={goUrlSongSpotify}/>
+      <ScrollView>
+        <CardSongSearch tracksData={songsData} onClickSong={goUrlSongSpotify}/>
+      </ScrollView>
     </View>
   )
 }
 
 export default Home
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});

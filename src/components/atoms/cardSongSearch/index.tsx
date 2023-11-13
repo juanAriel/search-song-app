@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   Text,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import CardSongSearchProps from "./interface";
@@ -13,20 +14,22 @@ const CardSongSearch = ({ tracksData, onClickSong }: CardSongSearchProps) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <View style={styles.containerCard}>
-          {tracksData.length > 0 &&
-            tracksData.map((track, index) => (
-              <View key={index}>
-                <View>
-                  <Image style={styles.logo} source={{ uri: track.imageUrl }} />
-                  <View>
-                    <Text style={styles.textTitleAlbum}>{track.name}</Text>
-                    <Text style={styles.textTitleSong}>{track.artist}</Text>
-                  </View>
-                </View>
-              </View>
-            ))}
+        
+      {tracksData.length > 0 &&
+  tracksData.map((track, index) => (
+    <View key={index} style={styles.containerCard}>
+      <TouchableOpacity onPress={() => onClickSong(track.id)}>
+        {track.imageUrl && (
+          <Image style={styles.logo} source={{ uri: track.imageUrl }} />
+        )}
+        <View>
+          <Text style={styles.textTitleAlbum}>{track.name}</Text>
+          <Text style={styles.textTitleSong}>{track.artist}</Text>
         </View>
+      </TouchableOpacity>
+    </View>
+  ))}
+        
       </ScrollView>
     </SafeAreaView>
   );

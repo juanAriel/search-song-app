@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity,StyleSheet ,Linking } from "react-native";
 
 import CardSongDetailsProps from "./interface";
 import React from "react";
@@ -8,33 +8,41 @@ const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
   if (!songDetail) {
     return null;
   }
+  const openExternalLink = async (url:any) => {
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      console.warn("it could not open the url:", url);
+    }
+  };
+
   return (
     <View>
-      <View>
-        <View style={{ display: "flex", flexDirection: "column" }}>
-          <View
-            style={{
-              flex: 1,
-              alignContent: "center",
-              alignItems: "center",
-              padding: 30,
-            }}
-          >
+      <View style={styles.container}>
+        <Image
+          style={{ width: 300, height: 300 }}
+          source={{ uri: songDetail.imageUrl }}
+        />
+        <View >
+
+          <View>
             <Text style={{ fontWeight: "bold", fontSize: 20 }}>
               {"album"}: {songDetail.album}
             </Text>
-            <Text style={{ fontWeight: "bold", fontSize: 18, color: "gray" }}>
+            <Text style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}>
               {"artist"}: {songDetail.artist}
             </Text>
-            <Text style={{ fontWeight: "bold", fontSize: 18, color: "gray" }}>
+            <Text style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}>
               {"title"}: {songDetail.name}
             </Text>
-            <Text style={{ fontWeight: "bold", fontSize: 18, color: "gray" }}>
+            <Text style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}>
               {"duration"}: {convertTime(songDetail.duration)}
             </Text>
           </View>
-          <View style={{ display: "flex", margin: "auto" }}>
-            <TouchableOpacity
+
+          <View>
+            <TouchableOpacity 
               style={{
                 borderRadius: 25,
                 height: 50,
@@ -43,23 +51,26 @@ const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              onPress={() => {
-                console.log("Abrir URL de la canción:", songDetail.songUrl);
+              onPress={() => {openExternalLink(songDetail.songUrl)
               }}
             >
               <Text style={{ color: "#fff", fontWeight: "bold" }}>
-                {"listen"}
+                {"listen music"}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
-        <Image
-          style={{ width: 300, height: 300 }}
-          source={{ uri: songDetail.imageUrl }}
-        />
       </View>
     </View>
   );
 };
 
 export default CardSongDetails;
+
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#41e3ff4a",
+    alignItems: "center",
+  },
+});

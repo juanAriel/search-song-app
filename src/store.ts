@@ -8,7 +8,10 @@ export const store = configureStore({
     [spotifyApi.reducerPath]: spotifyApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(spotifyApi.middleware),
+    getDefaultMiddleware({
+      immutableCheck: { warnAfter: 128 },
+    serializableCheck: { warnAfter: 128 },
+    }).concat(spotifyApi.middleware),
 });
 
 setupListeners(store.dispatch);
