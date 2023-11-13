@@ -2,8 +2,10 @@ import { StyleSheet, View, Text, TextInput } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import React, { useState } from "react";
 import SearchProps from "./interface";
+import { useTranslation } from "react-i18next";
 
 const SearchInput = ({ onSearch }:SearchProps) => {
+  const {t} = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleChange = (value: string) => {
@@ -13,13 +15,13 @@ const SearchInput = ({ onSearch }:SearchProps) => {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.text}>Search Song</Text>
+        <Text style={styles.text}>{t("search")}</Text>
       <View style={styles.containerSearch}>
         <Feather name="search" size={25}  style={styles.icon } />
         <TextInput
         style={styles.input}
         clearButtonMode="while-editing"
-        placeholder='Search'
+        placeholder={t("search")}
         value={searchTerm}
         onChangeText={handleChange}
       />

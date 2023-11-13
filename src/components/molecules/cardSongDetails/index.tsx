@@ -1,14 +1,24 @@
-import { View, Text, Image, TouchableOpacity,StyleSheet ,Linking } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Linking,
+} from "react-native";
 
 import CardSongDetailsProps from "./interface";
 import React from "react";
 import convertTime from "../../../utils/convertTime";
+import { useTranslation } from "react-i18next";
+import SelectLanguage from "../selectLanguage";
 
 const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
+  const { t, i18n } = useTranslation();
   if (!songDetail) {
     return null;
   }
-  const openExternalLink = async (url:any) => {
+  const openExternalLink = async (url: any) => {
     const supported = await Linking.canOpenURL(url);
     if (supported) {
       await Linking.openURL(url);
@@ -16,33 +26,47 @@ const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
       console.warn("it could not open the url:", url);
     }
   };
+  const changeLanguage = (selectedLanguage: string) => {
+    i18n.changeLanguage(selectedLanguage);
+  };
 
   return (
     <View>
+      <View>
+        <SelectLanguage
+          language={i18n.language}
+          changeLanguage={changeLanguage}
+        />
+      </View>
       <View style={styles.container}>
         <Image
           style={{ width: 300, height: 300 }}
           source={{ uri: songDetail.imageUrl }}
         />
-        <View >
-
+        <View>
           <View>
             <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-              {"album"}: {songDetail.album}
+              {t("album")}: {songDetail.album}
             </Text>
-            <Text style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}>
-              {"artist"}: {songDetail.artist}
+            <Text
+              style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}
+            >
+              {t("artist")}: {songDetail.artist}
             </Text>
-            <Text style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}>
-              {"title"}: {songDetail.name}
+            <Text
+              style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}
+            >
+              {t("title")}: {songDetail.name}
             </Text>
-            <Text style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}>
-              {"duration"}: {convertTime(songDetail.duration)}
+            <Text
+              style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}
+            >
+              {t("duration")}: {convertTime(songDetail.duration)}
             </Text>
           </View>
 
           <View>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={{
                 borderRadius: 25,
                 height: 50,
@@ -51,11 +75,12 @@ const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              onPress={() => {openExternalLink(songDetail.songUrl)
+              onPress={() => {
+                openExternalLink(songDetail.songUrl);
               }}
             >
               <Text style={{ color: "#fff", fontWeight: "bold" }}>
-                {"listen music"}
+                {t("listen")}
               </Text>
             </TouchableOpacity>
           </View>
@@ -66,7 +91,6 @@ const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
 };
 
 export default CardSongDetails;
-
 
 const styles = StyleSheet.create({
   container: {
