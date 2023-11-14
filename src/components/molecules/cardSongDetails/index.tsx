@@ -11,10 +11,9 @@ import CardSongDetailsProps from "./interface";
 import React from "react";
 import convertTime from "../../../utils/convertTime";
 import { useTranslation } from "react-i18next";
-import SelectLanguage from "../selectLanguage";
 
 const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   if (!songDetail) {
     return null;
   }
@@ -26,22 +25,15 @@ const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
       console.warn("it could not open the url:", url);
     }
   };
-  const changeLanguage = (selectedLanguage: string) => {
-    i18n.changeLanguage(selectedLanguage);
-  };
-
+  
   return (
     <View>
-      <View>
-        <SelectLanguage
-          language={i18n.language}
-          changeLanguage={changeLanguage}
-        />
-      </View>
       <View style={styles.container}>
         <Image
           style={{ width: 300, height: 300 }}
-          source={{ uri: songDetail.imageUrl }}
+          source={{
+            uri: songDetail.imageUrl !== "" ? songDetail.imageUrl : undefined,
+          }}
         />
         <View>
           <View>
@@ -94,6 +86,7 @@ export default CardSongDetails;
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 100,
     backgroundColor: "#41e3ff4a",
     alignItems: "center",
   },

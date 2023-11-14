@@ -1,22 +1,18 @@
-import { View, Text, ScrollView,StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import SearchInput from '../atoms/searchInput'
-import CardSongSearch from '../atoms/cardSongSearch'
-import Track from '../../models/track.interface'
-import { useLazySearchTracksQuery } from '../../services/api'
-import { getListSong } from '../../services/requestGetListSongs'
-import { useNavigation } from '@react-navigation/native'
-import SelectLanguage from '../molecules/selectLanguage'
-
-import { useTranslation } from 'react-i18next'
+import { View, ScrollView, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import SearchInput from "../atoms/searchInput";
+import CardSongSearch from "../atoms/cardSongSearch";
+import Track from "../../models/track.interface";
+import { useLazySearchTracksQuery } from "../../services/api";
+import { getListSong } from "../../services/requestGetListSongs";
+import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [songsData, setSongsData] = useState<Track[]>([]);
   const [trigger, { data }] = useLazySearchTracksQuery();
-  
+
   const navigation = useNavigation();
-  const { i18n } = useTranslation();
 
   useEffect(() => {
     if (data) {
@@ -26,11 +22,7 @@ const Home = () => {
   }, [searchTerm, data]);
 
   const goUrlSongSpotify = (id: string) => {
-    navigation.navigate('Details' , {id});
-  };
-
-  const changeLanguage = (selectedLanguage: string) => {
-    i18n.changeLanguage(selectedLanguage);
+    navigation.navigate("Details", { id });
   };
 
   const handleSearch = (nameSong: string) => {
@@ -43,29 +35,25 @@ const Home = () => {
     }
   };
 
-  
   return (
     <View style={styles.container}>
-  <View >
-    <SelectLanguage language={i18n.language} changeLanguage={changeLanguage}/>
-  </View>
-  
-  <View  >
-    <SearchInput onSearch={handleSearch}/>
-    <ScrollView>
-      <CardSongSearch tracksData={songsData} onClickSong={goUrlSongSpotify}/>
-    </ScrollView>
-  </View>
-</View>
-  )
-}
+      <View>
+        <SearchInput onSearch={handleSearch} />
+        <ScrollView>
+          <CardSongSearch
+            tracksData={songsData}
+            onClickSong={goUrlSongSpotify}
+          />
+        </ScrollView>
+      </View>
+    </View>
+  );
+};
 
-export default Home
-
+export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    backgroundColor: "#3498db88",
-  }
+    flex: 1,
+  },
 });

@@ -14,22 +14,20 @@ const CardSongSearch = ({ tracksData, onClickSong }: CardSongSearchProps) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        
-      {tracksData.length > 0 &&
-  tracksData.map((track, index) => (
-    <View key={index} style={styles.containerCard}>
-      <TouchableOpacity onPress={() => onClickSong(track.id)}>
-        {track.imageUrl && (
-          <Image style={styles.logo} source={{ uri: track.imageUrl }} />
-        )}
-        <View>
-          <Text style={styles.textTitleAlbum}>{track.name}</Text>
-          <Text style={styles.textTitleSong}>{track.artist}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  ))}
-        
+        {tracksData.length > 0 &&
+          tracksData.map((track, index) => (
+            <View key={index} style={styles.containerCard}>
+              <TouchableOpacity onPress={() => onClickSong(track.id)}>
+                {track.imageUrl && (
+                  <Image style={styles.logo} source={{ uri: track.imageUrl }} />
+                )}
+                <View>
+                  <Text style={styles.textTitleAlbum}>{track.name}</Text>
+                  <Text style={styles.textTitleSong}>{track.artist}</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -48,9 +46,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     justifyContent: "center",
     borderRadius: 25,
+    alignItems: "center",
   },
   scrollView: {
-    width: 320,
+    width: "auto",
   },
   logo: {
     width: 300,
