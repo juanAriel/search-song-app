@@ -1,25 +1,43 @@
 import {
   SafeAreaView,
   View,
-  Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   FlatList,
 } from "react-native";
 import CardSongSearchProps from "./interface";
 import Track from "../../../models/track.interface";
+import styled from 'styled-components/native/'
 
-const CardSongSearch = ({ tracksData, onClickSong }: CardSongSearchProps) => {
+
+const InputText = styled.Text`
+  color: #BF4F74;
+`
+const StyledTextAlbum = styled.Text`
+  padding: 20px;
+  background-color: blue;
+  font-size: 32px;
+  color: red;
+  text-align: center;
+`
+const ImageSong = styled.Image`
+  width: 300px;
+    height: 300px;
+    border-radius: 150px;
+    border-width: 1px;
+`
+const CardSongSearch  = ({ tracksData, onClickSong }: CardSongSearchProps) => {  
+  
   const renderSongItem = ({ item }: { item: Track }) => (
     <View style={styles.containerCard}>
       <TouchableOpacity onPress={() => onClickSong(item.id)}>
         {item.imageUrl && (
-          <Image style={styles.logo} source={{ uri: item.imageUrl }} />
+          <ImageSong  source={{ uri: item.imageUrl }} />
         )}
         <View>
-          <Text style={styles.textTitleAlbum}>{item.name}</Text>
-          <Text style={styles.textTitleSong}>{item.artist}</Text>
+          <StyledTextAlbum>{item.name}</StyledTextAlbum>
+          
+          <InputText>{item.artist}</InputText>
         </View>
       </TouchableOpacity>
     </View>
@@ -32,6 +50,7 @@ const CardSongSearch = ({ tracksData, onClickSong }: CardSongSearchProps) => {
         renderItem={renderSongItem}
         keyExtractor={(item) => item.id.toString()}
       />
+      
     </SafeAreaView>
   );
 };
@@ -47,24 +66,5 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 25,
     alignItems: "center",
-  },
-  logo: {
-    width: 300,
-    height: 300,
-    borderRadius: 150,
-    borderWidth: 1,
-  },
-  textTitleAlbum: {
-    color: "white",
-    fontSize: 20,
-    padding: 10,
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-  textTitleSong: {
-    color: "white",
-    fontSize: 16,
-    paddingBottom: 10,
-    textAlign: "center",
   },
 });
