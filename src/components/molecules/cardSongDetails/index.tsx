@@ -25,7 +25,7 @@ const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
       console.warn("it could not open the url:", url);
     }
   };
-  
+
   return (
     <View>
       <View style={styles.container}>
@@ -40,23 +40,16 @@ const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
             <Text style={{ fontWeight: "bold", fontSize: 20 }}>
               {t("album")}: {songDetail.album}
             </Text>
-            <Text
-              style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}
-            >
+            <Text style={styles.text}>
               {t("artist")}: {songDetail.artist}
             </Text>
-            <Text
-              style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}
-            >
+            <Text style={styles.text}>
               {t("title")}: {songDetail.name}
             </Text>
-            <Text
-              style={{ fontWeight: "bold", fontSize: 18, color: "#8f1930" }}
-            >
+            <Text style={styles.text}>
               {t("duration")}: {convertTime(songDetail.duration)}
             </Text>
           </View>
-
           <View>
             <TouchableOpacity
               style={{
@@ -87,7 +80,12 @@ export default CardSongDetails;
 const styles = StyleSheet.create({
   container: {
     marginTop: 100,
-    backgroundColor: "#41e3ff4a",
+    backgroundColor: "#0003a3b9",
     alignItems: "center",
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "#ffffffda",
   },
 });

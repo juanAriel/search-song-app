@@ -9,14 +9,7 @@ const SongPageDetails = ({ route }: { route: any }) => {
   const { id } = route.params;
 
   const dataSong = useGetSearchTrackQuery(id);
-  const [song, setSong] = useState<Song>({
-    album: "",
-    artist: "",
-    name: "",
-    imageUrl: "",
-    duration: 0,
-    songUrl: "",
-  });
+  const [song, setSong] = useState<Song | null>();
 
   useEffect(() => {
     const fetchSongData = () => {
@@ -27,11 +20,7 @@ const SongPageDetails = ({ route }: { route: any }) => {
       fetchSongData();
     }
   }, [dataSong]);
-  return (
-    <View>
-      <CardSongDetails songDetail={song} />
-    </View>
-  );
+  return <View>{song && <CardSongDetails songDetail={song} />}</View>;
 };
 
 export default SongPageDetails;

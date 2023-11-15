@@ -1,6 +1,5 @@
 // App.js
 import React from "react";
-import { StyleSheet, View } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "./src/store";
 import { NavigationContainer } from "@react-navigation/native";
@@ -54,12 +53,3 @@ export default function App() {
     </I18nextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    padding: 100,
-  },
-});

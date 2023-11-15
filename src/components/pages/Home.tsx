@@ -12,7 +12,9 @@ const Home = () => {
   const [songsData, setSongsData] = useState<Track[]>([]);
   const [trigger, { data }] = useLazySearchTracksQuery();
 
-  const navigation = useNavigation() as { navigate: (screen: string, params?: { id: string }) => void };
+  const navigation = useNavigation() as {
+    navigate: (screen: string, params?: { id: string }) => void;
+  };
 
   useEffect(() => {
     if (data) {
@@ -22,8 +24,8 @@ const Home = () => {
   }, [searchTerm, data]);
 
   const goUrlSongSpotify = (id: string) => {
-  navigation.navigate('Details', { id });
-};
+    navigation.navigate("Details", { id });
+  };
 
   const handleSearch = (nameSong: string) => {
     if (nameSong && nameSong.length > 3) {
@@ -38,10 +40,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <SearchInput onSearch={handleSearch} />
-      <CardSongSearch
-        tracksData={songsData}
-        onClickSong={goUrlSongSpotify}
-      />
+      <CardSongSearch tracksData={songsData} onClickSong={goUrlSongSpotify} />
     </View>
   );
 };
