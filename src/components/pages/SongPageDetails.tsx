@@ -3,11 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useGetSearchTrackQuery } from "../../services/api";
 import Song from "../../models/song.interface";
 import { getSong } from "../../services/requestToEnPointSong";
-import { useRoute } from "@react-navigation/native";
 import CardSongDetails from "../molecules/cardSongDetails";
 
-const SongPageDetails = () => {
-  const route = useRoute();
+const SongPageDetails = ({ route }: { route: any }) => {
   const { id } = route.params;
 
   const dataSong = useGetSearchTrackQuery(id);

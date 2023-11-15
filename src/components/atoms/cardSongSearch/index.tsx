@@ -1,34 +1,37 @@
 import {
   SafeAreaView,
-  ScrollView,
   View,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
-import React from "react";
 import CardSongSearchProps from "./interface";
+import Track from "../../../models/track.interface";
 
 const CardSongSearch = ({ tracksData, onClickSong }: CardSongSearchProps) => {
+  const renderSongItem = ({ item }: { item: Track }) => (
+    <View style={styles.containerCard}>
+      <TouchableOpacity onPress={() => onClickSong(item.id)}>
+        {item.imageUrl && (
+          <Image style={styles.logo} source={{ uri: item.imageUrl }} />
+        )}
+        <View>
+          <Text style={styles.textTitleAlbum}>{item.name}</Text>
+          <Text style={styles.textTitleSong}>{item.artist}</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        {tracksData.length > 0 &&
-          tracksData.map((track, index) => (
-            <View key={index} style={styles.containerCard}>
-              <TouchableOpacity onPress={() => onClickSong(track.id)}>
-                {track.imageUrl && (
-                  <Image style={styles.logo} source={{ uri: track.imageUrl }} />
-                )}
-                <View>
-                  <Text style={styles.textTitleAlbum}>{track.name}</Text>
-                  <Text style={styles.textTitleSong}>{track.artist}</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ))}
-      </ScrollView>
+      <FlatList
+        data={tracksData}
+        renderItem={renderSongItem}
+        keyExtractor={(item) => item.id.toString()}
+      />
     </SafeAreaView>
   );
 };
@@ -41,15 +44,9 @@ const styles = StyleSheet.create({
   },
   containerCard: {
     backgroundColor: "rgba(1, 7, 66, 0.64)",
-    margin: 10,
-    alignContent: "center",
-    textAlign: "center",
-    justifyContent: "center",
+    marginVertical: 10,
     borderRadius: 25,
     alignItems: "center",
-  },
-  scrollView: {
-    width: "auto",
   },
   logo: {
     width: 300,

@@ -52,5 +52,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: -15,
     borderColor: "#D9D9D9",
+    width:'100%',
   },
 });
