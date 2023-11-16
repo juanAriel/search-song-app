@@ -1,16 +1,22 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Linking,
-} from "react-native";
+import { View, Image, TouchableOpacity, Linking } from "react-native";
 
 import CardSongDetailsProps from "./interface";
 import React from "react";
 import convertTime from "../../../utils/convertTime";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components/native/";
+
+const TextInfoSong = styled.Text`
+  font-weight: bold;
+  font-size: 18px;
+  color: #ffffffda;
+  margin: 3px;
+`;
+const ViewMainContainer = styled.View`
+  margin-top: 100px;
+  background-color: #0661b6;
+  align-items: center;
+`;
 
 const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
   const { t } = useTranslation();
@@ -27,65 +33,48 @@ const CardSongDetails = ({ songDetail }: CardSongDetailsProps) => {
   };
 
   return (
-    <View>
-      <View style={styles.container}>
-        <Image
-          style={{ width: 300, height: 300 }}
-          source={{
-            uri: songDetail.imageUrl !== "" ? songDetail.imageUrl : undefined,
-          }}
-        />
+    <ViewMainContainer>
+      <Image
+        style={{ width: 300, height: 300 }}
+        source={{
+          uri: songDetail.imageUrl !== "" ? songDetail.imageUrl : undefined,
+        }}
+      />
+      <View>
         <View>
-          <View>
-            <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-              {t("album")}: {songDetail.album}
-            </Text>
-            <Text style={styles.text}>
-              {t("artist")}: {songDetail.artist}
-            </Text>
-            <Text style={styles.text}>
-              {t("title")}: {songDetail.name}
-            </Text>
-            <Text style={styles.text}>
-              {t("duration")}: {convertTime(songDetail.duration)}
-            </Text>
-          </View>
-          <View>
-            <TouchableOpacity
-              style={{
-                borderRadius: 25,
-                height: 50,
-                marginBottom: 20,
-                backgroundColor: "#3498db",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onPress={() => {
-                openExternalLink(songDetail.songUrl);
-              }}
-            >
-              <Text style={{ color: "#fff", fontWeight: "bold" }}>
-                {t("listen")}
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <TextInfoSong>
+            {t("album")}: {songDetail.album}
+          </TextInfoSong>
+          <TextInfoSong>
+            {t("artist")}: {songDetail.artist}
+          </TextInfoSong>
+          <TextInfoSong>
+            {t("title")}: {songDetail.name}
+          </TextInfoSong>
+          <TextInfoSong>
+            {t("duration")}: {convertTime(songDetail.duration)}
+          </TextInfoSong>
+        </View>
+        <View>
+          <TouchableOpacity
+            style={{
+              borderRadius: 25,
+              height: 50,
+              marginBottom: 20,
+              backgroundColor: "#3498db",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onPress={() => {
+              openExternalLink(songDetail.songUrl);
+            }}
+          >
+            <TextInfoSong>{t("listen")}</TextInfoSong>
+          </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ViewMainContainer>
   );
 };
 
 export default CardSongDetails;
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 100,
-    backgroundColor: "#0003a3b9",
-    alignItems: "center",
-  },
-  text: {
-    fontWeight: "bold",
-    fontSize: 18,
-    color: "#ffffffda",
-  },
-});

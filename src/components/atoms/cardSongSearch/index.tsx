@@ -1,70 +1,65 @@
-import {
-  SafeAreaView,
-  View,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { View, TouchableOpacity, FlatList, Platform } from "react-native";
 import CardSongSearchProps from "./interface";
 import Track from "../../../models/track.interface";
+import styled from "styled-components/native/";
+
+const InputText = styled.Text`
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+`;
+const StyledTextAlbum = styled.Text`
+  padding-top: 10px;
+  font-size: 25px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+`;
+
+const ImageSong = styled.Image`
+  width: 300px;
+  height: 300px;
+  border-radius: 150px;
+  border-width: 1px;
+`;
+const ViewContainerCard = styled.View`
+  background-color: rgba(1, 7, 66, 0.64);
+  margin: 10px;
+  border-radius: 25px;
+  align-items: center;
+`;
+
+const ViewSafeAreaContainer = styled.SafeAreaView`
+  flex: 1;
+`;
 
 const CardSongSearch = ({ tracksData, onClickSong }: CardSongSearchProps) => {
   const renderSongItem = ({ item }: { item: Track }) => (
-    <View style={styles.containerCard}>
+    <ViewContainerCard>
       <TouchableOpacity onPress={() => onClickSong(item.id)}>
-        {item.imageUrl && (
-          <Image style={styles.logo} source={{ uri: item.imageUrl }} />
+        {Platform.OS !== "web" && (
+          <View>
+            {item.imageUrl && <ImageSong source={{ uri: item.imageUrl }} />}
+            <View>
+              <StyledTextAlbum>{item.name}</StyledTextAlbum>
+              <InputText>{item.artist}</InputText>
+            </View>
+          </View>
         )}
-        <View>
-          <Text style={styles.textTitleAlbum}>{item.name}</Text>
-          <Text style={styles.textTitleSong}>{item.artist}</Text>
-        </View>
       </TouchableOpacity>
-    </View>
+    </ViewContainerCard>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ViewSafeAreaContainer>
       <FlatList
         data={tracksData}
         renderItem={renderSongItem}
         keyExtractor={(item) => item.id.toString()}
       />
-    </SafeAreaView>
+    </ViewSafeAreaContainer>
   );
 };
 
 export default CardSongSearch;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  containerCard: {
-    backgroundColor: "rgba(1, 7, 66, 0.64)",
-    marginVertical: 10,
-    borderRadius: 25,
-    alignItems: "center",
-  },
-  logo: {
-    width: 300,
-    height: 300,
-    borderRadius: 150,
-    borderWidth: 1,
-  },
-  textTitleAlbum: {
-    color: "white",
-    fontSize: 20,
-    padding: 10,
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-  textTitleSong: {
-    color: "white",
-    fontSize: 16,
-    paddingBottom: 10,
-    textAlign: "center",
-  },
-});

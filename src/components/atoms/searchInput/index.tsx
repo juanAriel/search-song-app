@@ -1,8 +1,28 @@
-import { StyleSheet, View, TextInput } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import React, { useState } from "react";
 import SearchProps from "./interface";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components/native/";
+
+const ViewContainerSearch = styled.View`
+  background-color: #f1f1f1c8;
+  flex-direction: row;
+  border-width: 1px;
+  border-radius: 30px;
+`;
+const IconSearch = styled(Feather)`
+  color: black;
+  padding: 16px;
+  font-size: 25px;
+`;
+const TextInputSearch = styled.TextInput`
+  height: auto;
+  padding: 16px;
+  font-size: 16px;
+  margin-left: -15px;
+  border-color: #d9d9d9;
+  width: 100%;
+`;
 
 const SearchInput = ({ onSearch }: SearchProps) => {
   const { t } = useTranslation();
@@ -14,44 +34,15 @@ const SearchInput = ({ onSearch }: SearchProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.containerSearch}>
-        <Feather name="search" size={25} style={styles.icon} />
-        <TextInput
-          style={styles.input}
-          placeholder={t("search")}
-          value={searchTerm}
-          onChangeText={handleChange}
-        />
-      </View>
-    </View>
+    <ViewContainerSearch>
+      <IconSearch name="search" />
+      <TextInputSearch
+        placeholder={t("search")}
+        value={searchTerm}
+        onChangeText={handleChange}
+      />
+    </ViewContainerSearch>
   );
 };
 
 export default SearchInput;
-
-const styles = StyleSheet.create({
-  container: {},
-  text: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  icon: {
-    color: "black",
-    padding: 16,
-  },
-  containerSearch: {
-    backgroundColor: "#f1f1f1c8",
-    flexDirection: "row",
-    borderWidth: 1,
-    borderRadius: 30,
-  },
-  input: {
-    height: "auto",
-    padding: 16,
-    fontSize: 16,
-    marginLeft: -15,
-    borderColor: "#D9D9D9",
-    width:'100%',
-  },
-});
