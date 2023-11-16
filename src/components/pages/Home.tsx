@@ -1,4 +1,3 @@
-import { View, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import SearchInput from "../atoms/searchInput";
 import CardSongSearch from "../atoms/cardSongSearch";
@@ -6,6 +5,11 @@ import Track from "../../models/track.interface";
 import { useLazySearchTracksQuery } from "../../services/api";
 import { getListSong } from "../../services/requestGetListSongs";
 import { useNavigation } from "@react-navigation/native";
+import styled from "styled-components/native/";
+
+const ViewMainContainer = styled.View`
+  flex: 1;
+`;
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -38,17 +42,11 @@ const Home = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ViewMainContainer>
       <SearchInput onSearch={handleSearch} />
       <CardSongSearch tracksData={songsData} onClickSong={goUrlSongSpotify} />
-    </View>
+    </ViewMainContainer>
   );
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
