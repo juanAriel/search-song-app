@@ -40,7 +40,7 @@ const CardSongSearch = ({ tracksData, onClickSong }: CardSongSearchProps) => {
       <TouchableOpacity onPress={() => onClickSong(item.id)}>
         {Platform.OS !== "web" && (
           <View>
-            {item.imageUrl && <ImageSong source={{ uri: item.imageUrl }} />}
+            {item.imageUrl && <ImageSong source={{ uri: item.imageUrl }} testID="song-image"/>}
             <View>
               <StyledTextAlbum>{item.name}</StyledTextAlbum>
               <InputText>{item.artist}</InputText>
