@@ -49,7 +49,7 @@ const CardSongSearch = ({ tracksData, onClickSong }: CardSongSearchProps) => {
         )}
       </TouchableOpacity>
     </ViewContainerCard>
-  );
+  ); 
 
   return (
     <ViewSafeAreaContainer>
