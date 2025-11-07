@@ -7,6 +7,7 @@ node_modules/
 .expo/
 dist/
 web-build/
+__snapshots__/
 
 # Native
 *.orig.*
